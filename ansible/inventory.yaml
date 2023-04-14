@@ -1,0 +1,3 @@
+[network]
+# 127.0.0.1 ansible_user=ansible
+82.148.16.72 ansible_user=ansible

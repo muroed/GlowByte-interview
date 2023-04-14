@@ -1,0 +1,31 @@
+#NGINX
+---
+- hosts: "all"
+  become: true
+  tasks:
+  - name: "Install nginx via yum"
+    ansible.builtin.yum:
+      name: "nginx"
+      state: "latest"
+  - name: "Update git via yum"
+    ansible.builtin.yum:
+      name: "git"
+      state: "latest"
+  - name: "Copy nginx.conf"
+    ansible.builtin.copy:
+      dest: "/etc/nginx/nginx.conf"
+      src: "nginx.conf"
+  - name: "Test nginx.conf"
+    ansible.builtin.shell:
+      cmd: "nginx -t"
+  - name: "Restart nginx"
+    ansible.builtin.service:
+      name: "nginx"
+      state: "restarted"
+  - name: "Git clone weather app"
+    ansible.builtin.git:
+      repo: https://github.com/Parfaitv/weather.git
+      dest: /usr/share/nginx/html/weather
+      update: false
+      version: main
+...
